@@ -7,16 +7,45 @@
     <style>
         body {
             font-family: "Times New Roman", Times, serif;
-            margin: 50px;
+            margin: 0;
+            padding: 30px;
+            background-color: #f5f5f5;
+            font-size: 13px;
         }
 
-        .center {
+        .container {
+            max-width: 800px;
+            width: 90%;
+            margin: auto;
+            padding: 40px;
+            background: white;
+            border: 2px solid black;
+            position: relative;
+        }
+
+        .header {
+            display: table;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        .header-left {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
+            text-align: left;
+            font-size: 14px;
+            line-height: 1.4;
+            padding-right: 20px;
+        }
+
+        .header-right {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
             text-align: center;
-        }
-
-        .header hr,
-        .footer hr {
-            border: 1px solid black;
+            font-size: 13px;
+            line-height: 1.3;
         }
 
         .bold {
@@ -27,63 +56,138 @@
             text-decoration: underline;
         }
 
+        .title-section {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
         .content {
-            margin-top: 30px;
+            font-size: 13px;
             line-height: 1.8;
+            text-align: justify;
         }
 
-        .signature {
-            text-align: right;
+        .content-line {
+            margin: 15px 0;
+        }
+
+        .student-line {
+            margin: 15px 0;
+        }
+
+        .student-name {
+            font-weight: bold;
+        }
+
+        .class-number {
+            font-weight: bold;
+        }
+
+        .bottom-section {
             margin-top: 50px;
+            display: table;
+            width: 100%;
         }
 
-        .thank {
+        .thank-section {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
             font-style: italic;
             font-weight: bold;
+        }
+
+        .signature-section {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
             text-align: center;
-            margin-top: 30px;
+            line-height: 1.5;
+        }
+
+        .signature-date {
+            margin-bottom: 10px;
+        }
+
+        .date-location {
+            font-style: italic;
+        }
+
+        .signature-title {
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        .teacher-name {
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <div class="bold">SỞ GIÁO DỤC & ĐÀO TẠO {{ city_department_of_education }}</div>
+                <div class="bold underline">{{ school_name | upper }}</div>
+            </div>
+            <div class="header-right">
+                <div class="bold">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
+                <div class="underline">Độc lập - Tự do - Hạnh phúc</div>
+            </div>
+        </div>
 
-    <div class="header">
-        <div class="center bold">SỞ GIÁO DỤC & ĐÀO TẠO {{ city_department_of_education }}</div>
-        <div class="center bold underline">{{ school_name | upper }}</div>
-        <br>
-        <div class="center bold">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
-        <div class="center underline">Độc lập - Tự do - Hạnh phúc</div>
-        <hr>
+        <div class="title-section">
+            <h2 class="title">GIẤY MỜI</h2>
+        </div>
+
+        <div class="content">
+            <div class="student-line">
+                Trân trọng kính mời phụ huynh của em: &nbsp;&nbsp;&nbsp;<span class="student-name">{{ student_name
+                    }}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lớp:
+                &nbsp;&nbsp;&nbsp;<span class="class-number">{{ class }}</span>
+            </div>
+
+            <div class="content-line">
+                Tới dự buổi <strong>{{ purpose }}</strong> và bàn kế hoạch giáo dục học kỳ tiếp theo.
+            </div>
+
+            <div class="content-line">
+                Thời gian: &nbsp;&nbsp;&nbsp;08h00, {{ date }}
+            </div>
+
+            <div class="content-line">
+                Địa điểm: &nbsp;&nbsp;&nbsp;&nbsp;{{ address }} - {{ school_name }}
+            </div>
+
+            <div class="content-line">
+                Rất mong quý vị phụ huynh có mặt đầy đủ và đúng giờ để buổi họp đạt kết quả tốt.
+            </div>
+        </div>
+
+        <div class="bottom-section">
+            <div class="thank-section">
+                <em>Xin chân thành cảm ơn!</em>
+            </div>
+            <div class="signature-section">
+                <div class="signature-date">
+                    <div class="date-location">{{ city }}, ngày {{ date_day }} tháng {{ date_month }} năm {{ date_year
+                        }}</div>
+                </div>
+                <div class="signature-title">Giáo viên chủ nhiệm</div>
+                <div class="teacher-name">{{ teacher }}</div>
+            </div>
+        </div>
+
+
     </div>
-
-    <div class="center">
-        <h2 class="bold underline">GIẤY MỜI</h2>
-    </div>
-
-    <div class="content">
-        <p>Trân trọng kính mời phụ huynh của em: <strong>{{ student_name
-                }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lớp: <strong>{{ class }}</strong>
-        </p>
-
-        <p>Tới dự buổi <strong>{{ purpose }}</strong> và bàn kế hoạch giáo dục học kỳ tiếp theo.</p>
-
-        <p>Thời gian: &nbsp;&nbsp;&nbsp;08h00, {{ date }}</p>
-
-        <p>Địa điểm: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ address }} - {{ school_name }}</p>
-
-        <p>Rất mong quý vị phụ huynh có mặt đầy đủ và đúng giờ để buổi họp đạt kết quả tốt.</p>
-    </div>
-
-    <div class="thank">Xin chân thành cảm ơn!</div>
-
-    <div class="signature">
-        <p>{{ city }}, ngày {{ date_day }} tháng {{ date_month }} năm {{ date_year }}</p>
-        <p><strong>Giáo viên chủ nhiệm</strong></p>
-        <br><br>
-        <p><strong>{{ teacher }}</strong></p>
-    </div>
-
 </body>
 
 </html>
