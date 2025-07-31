@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gửi thư mời họp phụ huynh</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+            border-radius: 20px 20px 0 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #34495e;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #fafbfc;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .file-upload {
+            position: relative;
+            display: block;
+            width: 100%;
+            padding: 20px;
+            border: 2px dashed #667eea;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+        }
+
+        .file-upload:hover {
+            border-color: #764ba2;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            transform: translateY(-2px);
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-upload-content {
+            pointer-events: none;
+        }
+
+        .file-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .file-text {
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 5px;
+        }
+
+        .note {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-top: 8px;
+            padding: 10px 15px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 25px;
+                border-radius: 15px;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 30px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            input[type="text"],
+            input[type="date"],
+            select {
+                padding: 12px 16px;
+                font-size: 15px;
+            }
+
+            .submit-btn {
+                padding: 15px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Animation */
+        .container {
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            animation-fill-mode: both;
+        }
+
+        .form-group:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .form-group:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .form-group:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .form-group:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .form-group:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .form-group:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        .form-group:nth-child(7) {
+            animation-delay: 0.7s;
+        }
+
+        .form-group:nth-child(8) {
+            animation-delay: 0.8s;
+        }
+
+        .form-group:nth-child(9) {
+            animation-delay: 0.9s;
+        }
+
+        .form-group:nth-child(10) {
+            animation-delay: 1.0s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>📧 Tạo thư mời họp phụ huynh</h1>
+
+        <form action="/upload-excel" method="post" enctype="multipart/form-data">
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label for="file">📁 Tải lên file Excel (.xlsx)</label>
+                    <div class="file-upload">
+                        <input type="file" name="file" accept=".xlsx" required>
+                        <div class="file-upload-content">
+                            <div class="file-icon">📄</div>
+                            <div class="file-text">Chọn hoặc kéo thả file Excel</div>
+                        </div>
+                    </div>
+                    <p class="note">📋 File phải có 4 cột: STT, Họ tên phụ huynh, Giới tính, Tên học sinh</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="class">🎓 Lớp học</label>
+                    <input type="text" name="class" placeholder="Ví dụ: 10A1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="school_name">🏫 Tên trường</label>
+                    <input type="text" name="school_name" placeholder="Ví dụ: Trường THPT Trường Chinh" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="city_department_of_education">🏛️ Sở giáo dục</label>
+                    <input type="text" name="city_department_of_education" placeholder="Ví dụ: HCM" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">📍 Địa điểm họp</label>
+                    <input type="text" name="address" placeholder="Ví dụ: Phòng B203" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="city">🌆 Thành phố</label>
+                    <input type="text" name="city" placeholder="Ví dụ: Hồ Chí Minh" required>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="purpose">🎯 Mục đích buổi họp</label>
+                    <input type="text" name="purpose" placeholder="Ví dụ: Thông báo kết quả học tập" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="date_meeting">📅 Ngày họp phụ huynh</label>
+                    <input type="date" name="date_meeting" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="date_write">✍️ Ngày viết thư</label>
+                    <input type="date" name="date_write" required>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="teacher">👨‍🏫 Tên giáo viên chủ nhiệm</label>
+                    <input type="text" name="teacher" value="Nguyễn Thùy Dương" required>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                ✨ Tạo thư mời
+            </button>
+        </form>
+    </div>
+</body>
+
+</html>

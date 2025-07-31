@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduInvite - Hệ thống tạo thư mời phụ huynh thông minh</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="white" opacity="0.1"><polygon points="0,0 1000,0 1000,100 0,80"/></svg>');
+            background-size: cover;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            background: #f8f9fa;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: #7f8c8d;
+            line-height: 1.7;
+        }
+
+        /* Technology Section */
+        .technology {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .tech-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: #667eea;
+            flex-shrink: 0;
+        }
+
+        .benefit-content h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .benefit-content p {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .final-cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            text-align: center;
+            color: white;
+        }
+
+        .final-cta h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .final-cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 0 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .features-grid,
+            .tech-grid,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">🎓 EduInvite</div>
+            <ul class="nav-links">
+                <li><a href="#home">Trang chủ</a></li>
+                <li><a href="#features">Tính năng</a></li>
+                <li><a href="#technology">Công nghệ</a></li>
+                <li><a href="#benefits">Lợi ích</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>🚀 Tạo thư mời phụ huynh trong vài giây</h1>
+            <p>Hệ thống thông minh giúp giáo viên tạo hàng trăm thư mời cá nhân hóa chỉ với một file Excel. Tiết kiệm
+                thời gian, chuyên nghiệp và hiệu quả.</p>
+            <a href="{{ url_for('create_form') }}" class="cta-button">✨ Bắt đầu ngay</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>🎯 Tính năng nổi bật</h2>
+                <p>Giải pháp toàn diện cho việc tạo và gửi thư mời họp phụ huynh</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Xử lý hàng loạt</h3>
+                    <p>Upload file Excel và tạo hàng trăm thư mời cá nhân hóa trong vài phút. Mỗi thư mời được tùy chỉnh
+                        theo thông tin riêng của từng học sinh.</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Template chuyên nghiệp</h3>
+                    <p>Thiết kế theo chuẩn văn bản hành chính, đẹp mắt và chuyên nghiệp. Có thể in trực tiếp hoặc gửi
+                        qua email.</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">📱</div>
+                    <h3>Responsive Design</h3>
+                    <p>Giao diện thân thiện, hoạt động mượt mà trên mọi thiết bị từ máy tính đến điện thoại di động.</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Bảo mật dữ liệu</h3>
+                    <p>Không lưu trữ thông tin cá nhân, xử lý trực tiếp trên trình duyệt. Đảm bảo quyền riêng tư tuyệt
+                        đối.</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">⏱️</div>
+                    <h3>Tiết kiệm thời gian</h3>
+                    <p>Từ 3-4 giờ viết tay xuống còn 3-5 phút. Giải phóng thời gian để tập trung vào công việc giảng
+                        dạy.</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">📊</div>
+                    <h3>Dễ sử dụng</h3>
+                    <p>Giao diện đơn giản, trực quan. Không cần kỹ năng kỹ thuật, mọi giáo viên đều có thể sử dụng ngay.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="technology" id="technology">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>🛠️ Công nghệ hiện đại</h2>
+                <p>Được xây dựng bằng những công nghệ web tiên tiến nhất</p>
+            </div>
+
+            <div class="tech-grid">
+                <div class="tech-item fade-in">
+                    <div class="tech-icon">🌐</div>
+                    <h4>HTML5 & CSS3</h4>
+                    <p>Giao diện hiện đại với animations mượt mà</p>
+                </div>
+
+                <div class="tech-item fade-in">
+                    <div class="tech-icon">⚙️</div>
+                    <h4>JavaScript ES6+</h4>
+                    <p>Xử lý logic phức tạp, tối ưu hiệu suất</p>
+                </div>
+
+                <div class="tech-item fade-in">
+                    <div class="tech-icon">🐍</div>
+                    <h4>Python FastApi</h4>
+                    <p>Backend mạnh mẽ, xử lý file Excel nhanh chóng</p>
+                </div>
+
+                <div class="tech-item fade-in">
+                    <div class="tech-icon">📄</div>
+                    <h4>Template Engine</h4>
+                    <p>Tạo PDF và HTML từ template động</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits" id="benefits">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>💡 Lợi ích mang lại</h2>
+                <p>Những giá trị thiết thực cho giáo viên và nhà trường</p>
+            </div>
+
+            <div class="benefits-grid">
+                <div class="benefit-item fade-in">
+                    <div class="benefit-icon">💰</div>
+                    <div class="benefit-content">
+                        <h4>Tiết kiệm chi phí</h4>
+                        <p>Không cần thuê nhân viên thêm hay mua phần mềm đắt tiền. Hoàn toàn miễn phí sử dụng.</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item fade-in">
+                    <div class="benefit-icon">📈</div>
+                    <div class="benefit-content">
+                        <h4>Tăng hiệu quả công việc</h4>
+                        <p>Giảm 95% thời gian tạo thư mời, giáo viên có thể tập trung vào việc chuẩn bị nội dung họp.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="benefit-item fade-in">
+                    <div class="benefit-icon">✅</div>
+                    <div class="benefit-content">
+                        <h4>Giảm sai sót</h4>
+                        <p>Tự động điền thông tin từ dữ liệu có sẵn, loại bỏ hoàn toàn lỗi chính tả và sai thông tin.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="benefit-item fade-in">
+                    <div class="benefit-icon">🎯</div>
+                    <div class="benefit-content">
+                        <h4>Chuyên nghiệp hóa</h4>
+                        <p>Nâng cao hình ảnh nhà trường với những văn bản được thiết kế đẹp mắt và chuẩn mực.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>🚀 Sẵn sàng trải nghiệm?</h2>
+            <p>Hãy thử ngay và cảm nhận sự khác biệt!</p>
+            <a href="{{ url_for('create_form') }}" class="cta-button">Tạo thư mời ngay</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 EduInvite. Được phát triển với ❤️ cho giáo dục Việt Nam</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+        function handleScroll() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Run once on load
+
+        // Header background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('click', function (e) {
+                console.log('Redirecting to form.html...');
+            });
+        });
+    </script>
+</body>
+
+</html>

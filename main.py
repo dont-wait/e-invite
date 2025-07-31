@@ -10,6 +10,14 @@ templates = Jinja2Templates(directory="templates")
 def read_root(request: Request):
     return templates.TemplateResponse(
         request,
-        "template.html",
+        "homepage.html",
+        {}
+    )
+
+@app.get("/create-form")
+def create_form(request: Request):
+    return templates.TemplateResponse(
+        request,
+        "form.html",
         {}
     )
