@@ -150,25 +150,28 @@
 
         <div class="content">
             <div class="student-line">
-                Trân trọng kính mời phụ huynh của em: &nbsp;&nbsp;&nbsp;<span class="student-name">{{ student_name
-                    }}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lớp:
-                &nbsp;&nbsp;&nbsp;<span class="class-number">{{ class }}</span>
+                Trân trọng kính mời
+                {% if gender == "Nam" %}Ông{% elif gender == "Nữ" %}Bà{% else %}Ông/Bà{% endif %}
+                <span class="student-name">{{ parent_name }}</span> – phụ huynh của em
+                <span class="student-name">{{ student_name }}</span>, học sinh lớp
+                <span class="class-number">{{ class }}</span>.
             </div>
 
             <div class="content-line">
-                Tới dự buổi <strong>{{ purpose }}</strong> và bàn kế hoạch giáo dục học kỳ tiếp theo.
+                Kính mời quý phụ huynh đến tham dự buổi <strong>{{ purpose }}</strong> và trao đổi kế hoạch giáo dục học
+                kỳ tiếp theo.
             </div>
 
             <div class="content-line">
-                Thời gian: &nbsp;&nbsp;&nbsp;08h00, {{ date }}
+                Thời gian: 08h00, ngày {{ meeting_day }} tháng {{ meeting_month }} năm {{ meeting_year }}
             </div>
 
             <div class="content-line">
-                Địa điểm: &nbsp;&nbsp;&nbsp;&nbsp;{{ address }} - {{ school_name }}
+                Địa điểm: {{ address }} – {{ school_name }} – {{ city }}
             </div>
 
             <div class="content-line">
-                Rất mong quý vị phụ huynh có mặt đầy đủ và đúng giờ để buổi họp đạt kết quả tốt.
+                Rất mong quý phụ huynh có mặt đầy đủ và đúng giờ để buổi họp đạt kết quả tốt.
             </div>
         </div>
 
@@ -178,15 +181,13 @@
             </div>
             <div class="signature-section">
                 <div class="signature-date">
-                    <div class="date-location">{{ city }}, ngày {{ date_day }} tháng {{ date_month }} năm {{ date_year
-                        }}</div>
+                    <div class="date-location">{{ city }}, ngày {{ write_day }} tháng {{ write_month }} năm {{
+                        write_year }}</div>
                 </div>
                 <div class="signature-title">Giáo viên chủ nhiệm</div>
                 <div class="teacher-name">{{ teacher }}</div>
             </div>
         </div>
-
-
     </div>
 </body>
 
