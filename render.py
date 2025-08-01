@@ -4,12 +4,13 @@ from datetime import datetime
 import os
 from util import format_date  
 
+#Test 
 def get_input_data():
-    with open('data.json', 'r', encoding='utf-8') as file:
+    with open('data/data.json', 'r', encoding='utf-8') as file:
         return json.load(file)
 
 def get_template():
-    with open('template.html', 'r', encoding='utf-8') as file:
+    with open('templates/template.html', 'r', encoding='utf-8') as file:
         return file.read()
 
 def save_invite(html_content, filename):
@@ -17,8 +18,8 @@ def save_invite(html_content, filename):
     with open(f'invites/{filename}', 'w', encoding='utf-8') as file:
         file.write(html_content)
 
-def build_invite():
-    data = get_input_data()
+def build_invite(data: dict):
+    # data = get_input_data()
     html_template = get_template()
     jinja2_template = Template(html_template)
 

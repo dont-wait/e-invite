@@ -1,5 +1,6 @@
 from datetime import datetime
 
+# Check and format date fields in the info 
 def format_date(info: dict) -> dict:
     try:
         write_date = datetime.strptime(info["date_write"], "%Y-%m-%d")

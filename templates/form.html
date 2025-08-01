@@ -24,59 +24,80 @@
                         </div>
                     </div>
                     <p class="note">📋 File phải có 4 cột: STT, Họ tên phụ huynh, Giới tính, Tên học sinh</p>
+                    <div id="excel-preview" style="display: none; margin-top: 1rem;">
+                        <h3>👪 Danh sách phụ huynh:</h3>
+                        <table class="preview-table">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Họ Tên PH</th>
+                                    <th>Giới Tính</th>
+                                    <th>Họ Tên Học Sinh</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
                 </div>
 
                 <div class="form-group">
                     <label for="class">🎓 Lớp học</label>
-                    <input type="text" name="class" placeholder="Ví dụ: 10A1" required>
+                    <input type="text" name="class" id="class" placeholder="Ví dụ: 10A1" required>
                 </div>
 
                 <div class="form-group">
                     <label for="school_name">🏫 Tên trường</label>
-                    <input type="text" name="school_name" placeholder="Ví dụ: Trường THPT Trường Chinh" required>
+                    <input type="text" name="school_name" id="school_name" placeholder="Ví dụ: Trường THPT Trường Chinh"
+                        required>
                 </div>
 
                 <div class="form-group">
                     <label for="city_department_of_education">🏛️ Sở giáo dục</label>
-                    <input type="text" name="city_department_of_education" placeholder="Ví dụ: HCM" required>
+                    <input type="text" name="city_department_of_education" id="city_department_of_education"
+                        placeholder="Ví dụ: HCM" required>
                 </div>
 
                 <div class="form-group">
                     <label for="address">📍 Địa điểm họp</label>
-                    <input type="text" name="address" placeholder="Ví dụ: Phòng B203" required>
+                    <input type="text" name="address" id="address" placeholder="Ví dụ: Phòng B203" required>
                 </div>
 
                 <div class="form-group">
                     <label for="city">🌆 Thành phố</label>
-                    <input type="text" name="city" placeholder="Ví dụ: Hồ Chí Minh" required>
+                    <input type="text" name="city" id="city" placeholder="Ví dụ: Hồ Chí Minh" required>
                 </div>
 
                 <div class="form-group full-width">
                     <label for="purpose">🎯 Mục đích buổi họp</label>
-                    <input type="text" name="purpose" placeholder="Ví dụ: Thông báo kết quả học tập" required>
+                    <input type="text" name="purpose" id="purpose" placeholder="Ví dụ: Thông báo kết quả học tập"
+                        required>
                 </div>
 
                 <div class="form-group">
                     <label for="date_meeting">📅 Ngày họp phụ huynh</label>
-                    <input type="date" name="date_meeting" required>
+                    <input type="date" name="date_meeting" id="date_meeting" required>
                 </div>
 
                 <div class="form-group">
                     <label for="date_write">✍️ Ngày viết thư</label>
-                    <input type="date" name="date_write" required>
+                    <input type="date" name="date_write" id="date_write" required>
                 </div>
 
                 <div class="form-group full-width">
                     <label for="teacher">👨‍🏫 Tên giáo viên chủ nhiệm</label>
-                    <input type="text" name="teacher" placeholder="Ví dụ: Nguyễn Thùy Dương" required>
+                    <input type="text" name="teacher" id="teacher" placeholder="Ví dụ: Nguyễn Thùy Dương" required>
                 </div>
             </div>
 
-            <button type="submit" class="submit-btn">
+            <button type="submit" class="submit-btn" onclick="generationInvites()">
                 ✨ Tạo thư mời
             </button>
         </form>
+
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="/static/js/form.js"></script>
 </body>
 
 </html>
