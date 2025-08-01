@@ -3,6 +3,7 @@ import os
 import zipfile
 from weasyprint import HTML
 
+# Check and format date fields in the info 
 def format_date(info: dict) -> dict:
     try:
         write_date = datetime.strptime(info["date_write"], "%Y-%m-%d")
@@ -26,10 +27,10 @@ def format_date(info: dict) -> dict:
     return info
 
 def convert_html_2_pdf(html_str: str, output_path: str):
-    HTML(string=html_str).write_pdf(output_path)
+    HTML(string=html_str).write_pdf(output_path, stylesheets=["static/css/template.css"])
 
 def zip_folder(folder_path: str, output_zip: str):
-    with zipfile.ZipFile(output_zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+    with zipfile.ZipFile(output_zip, 'w', zipfile.ZIP_DEFLATED) as zipf:
         for root, _, files in os.walk(folder_path):
             for file in files:
                 full_path = os.path.join(root, file)
