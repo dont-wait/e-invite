@@ -111,18 +111,31 @@ document.addEventListener("DOMContentLoaded", function () {
         const payload = { infos };
 
         try {
-            const res = await fetch("/generate-invites", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
+            const res = await fetch('/generate-invites', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(payload)
-            });
-
-            const result = await res.json();
-            if (res.ok) {
-                alert(result.message);
-            } else {
-                alert("❌ Lỗi: " + result.message);
-            }
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error("Tạo thư mời thất bại");
+                    return response.blob();
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'thu_moi_phu_huynh.zip';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(url);
+                    alert("✅ Đã tạo thư mời thành công!");
+                })
+                .catch(error => {
+                    alert("❌ " + error.message);
+                });
         } catch (err) {
             alert("Không thể gửi dữ liệu: " + err.message);
         }

@@ -6,6 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from render import build_invite
 from fastapi import Body
 from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -30,10 +31,15 @@ def create_form(request: Request):
 async def generate_invites(payload: dict = Body(...)):
     try:
         build_invite(payload)
-        return JSONResponse({
-            "message": f"✅ Đã tạo {len(payload['infos'])} thư mời.",
-            "status": "success"
-        })
+        zip_path = "invites/invite_all.zip"
+        return FileResponse(
+            path=zip_path,
+            media_type="application/zip",
+            filename="thu_moi_phu_huynh.zip",
+            headers={
+                "Content-Disposition": "attachment; filename=thu_moi_phu_huynh.zip"
+            }
+        )
     except Exception as e:
         return JSONResponse({
             "message": f"❌ Lỗi tạo thư mời: {str(e)}",

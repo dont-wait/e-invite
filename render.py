@@ -2,7 +2,7 @@ import json
 from jinja2 import Template
 from datetime import datetime
 import os
-from util import format_date  
+from util import format_date, convert_html_2_pdf, zip_folder
 
 #Test 
 def get_input_data():
@@ -14,25 +14,36 @@ def get_template():
         return file.read()
 
 def save_invite(html_content, filename):
-    os.makedirs("invites", exist_ok=True)
-    with open(f'invites/{filename}', 'w', encoding='utf-8') as file:
+    with open(f'invites/html/{filename}', 'w', encoding='utf-8') as file:
         file.write(html_content)
 
 def build_invite(data: dict):
-    # data = get_input_data()
     html_template = get_template()
     jinja2_template = Template(html_template)
+
+    html_folder = "invites/html"
+    pdf_folder = "invites/pdf"
+
+    os.makedirs(html_folder, exist_ok=True)
+    os.makedirs(pdf_folder, exist_ok=True)
 
     for i, info in enumerate(data["infos"]):
         try:
             info = format_date(info)
             html_content = jinja2_template.render(**info)
-            filename = f"invite_{i+1}_{info['student_name'].replace(' ', '_')}.html"
-            save_invite(html_content, filename)
+
+            # Save HTML
+            html_filename = f"invite_{i+1}_{info['student_name'].replace(' ', '_')}.html"
+            save_invite(html_content, html_filename)
+
+            # Save PDF
+            pdf_filename = os.path.join(pdf_folder, f"invite_{i+1}_{info['student_name'].replace(' ', '_')}.pdf")
+            convert_html_2_pdf(html_content, pdf_filename)
+            print("=======Saved PDF:", pdf_filename)
+
         except Exception as e:
-            print(f"Error in info: #{i+1}: {e}")
+            print(f"======Error in info #{i+1}: {e}")
 
-    print("All invites have been saved to 'invites/'.")
-
-if __name__ == "__main__":
-    build_invite()
+    # ZIP
+    zip_folder(pdf_folder, "invites/invite_all.zip")
+    print("======Đã tạo file nén: invites/invite_all.zip")
