@@ -24,6 +24,21 @@
                         </div>
                     </div>
                     <p class="note">📋 File phải có 4 cột: STT, Họ tên phụ huynh, Giới tính, Tên học sinh</p>
+                    <div id="excel-preview" style="display: none; margin-top: 1rem;">
+                        <h3>👪 Danh sách phụ huynh:</h3>
+                        <table class="preview-table">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Họ Tên PH</th>
+                                    <th>Giới Tính</th>
+                                    <th>Họ Tên Học Sinh</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
                 </div>
 
                 <div class="form-group">
@@ -76,7 +91,10 @@
                 ✨ Tạo thư mời
             </button>
         </form>
+
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="/static/js/form.js"></script>
 </body>
 
 </html>

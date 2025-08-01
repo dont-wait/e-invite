@@ -5,11 +5,11 @@ import os
 from util import format_date  
 
 def get_input_data():
-    with open('data.json', 'r', encoding='utf-8') as file:
+    with open('data/data.json', 'r', encoding='utf-8') as file:
         return json.load(file)
 
 def get_template():
-    with open('template.html', 'r', encoding='utf-8') as file:
+    with open('templates/template.html', 'r', encoding='utf-8') as file:
         return file.read()
 
 def save_invite(html_content, filename):
