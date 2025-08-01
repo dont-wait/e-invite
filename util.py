@@ -1,4 +1,7 @@
 from datetime import datetime
+import os
+import zipfile
+from weasyprint import HTML
 
 def format_date(info: dict) -> dict:
     try:
@@ -21,3 +24,14 @@ def format_date(info: dict) -> dict:
         raise ValueError(f"Lỗi xử lý ngày: {e}")
 
     return info
+
+def convert_html_2_pdf(html_str: str, output_path: str):
+    HTML(string=html_str).write_pdf(output_path)
+
+def zip_folder(folder_path: str, output_zip: str):
+    with zipfile.ZipFile(output_zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for root, _, files in os.walk(folder_path):
+            for file in files:
+                full_path = os.path.join(root, file)
+                arcname = os.path.relpath(full_path, folder_path)
+                zipf.write(full_path, arcname)
